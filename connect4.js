@@ -41,7 +41,7 @@ class Game {
     this.board = [];
     this.players = [];
 
-    this.currPlayer = 1;
+    this.currPlayer = 0;
     this.gameOver = false;
 
     this.startGame = document.getElementById("startGame"); // form
@@ -57,16 +57,21 @@ class Game {
 
   createGame(evt) {
     evt.preventDefault();
+    // we're not validating inputs
+    const player1 = document.getElementById("player1").value;
+    const player2 = document.getElementById("player2").value;
 
     // maybe we can move this to a controller function
 
     // reset board
     // debugger;
     this.board = [];
-    this.players.push(new Player("red"), new Player("blue"));
+    this.players = [];
+    this.players.push(new Player(player1), new Player(player2));
     console.log(this.players);
 
     // TODO: Move this to outside of class
+    // and create game and player instance when form is submitted
     this.gameOver = false;
     const gameBoard = document.getElementById("board");
     gameBoard.innerHTML = "";
@@ -127,7 +132,7 @@ class Game {
     }
 
     // switch players
-    this.currPlayer = this.currPlayer === 1 ? 2 : 1;
+    this.currPlayer = this.currPlayer === 0 ? 1 : 0;
   }
 
   /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -186,7 +191,8 @@ class Game {
     // this.piece.classList.add(`p${this.currPlayer}`);
     // this.piece.style.top = -50 * (y + 2);
     piece.classList.add("piece");
-    piece.classList.add(`p${this.currPlayer}`);
+    // piece.classList.add(`p${this.currPlayer}`);
+    piece.style.backgroundColor = this.players[this.currPlayer].color;
     piece.style.top = -50 * (y + 2);
 
     const spot = document.getElementById(`${y}-${x}`);

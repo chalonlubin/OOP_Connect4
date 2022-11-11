@@ -176,7 +176,11 @@ class Game {
   findSpotForCol(x) {
     // console.log("findSpotForCol this", this)
     for (let y = this.height - 1; y >= 0; y--) {
-      if (!this.board[y][x]) {
+
+      // @chalon david l. helped fix a small bug where it was appending multiple
+      // pieces into the same spot b/c we were using 0 and 1 values for players
+      // and !0 evaluated to true.
+      if (this.board[y][x] === undefined) {
         return y;
       }
     }
